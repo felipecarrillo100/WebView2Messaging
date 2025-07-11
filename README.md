@@ -5,7 +5,7 @@ A simple C++ Windows desktop application using WebView2 to display a web applica
 ## Directory Structure
 
 ```
-WebView2Messaging/             # Root folder
+WebView2Messaging/            # Root folder
 ├── WebView2Messaging.sln     # Visual Studio solution file
 ├── README.md                 # This file
 └── WebView2Messaging/        # Source code folder
@@ -46,7 +46,7 @@ WebView2Messaging/             # Root folder
 
 ## Usage
 
-- The application loads the web application at `http://localhost:8080/home/`.
+- The application loads the web application at `http://localhost:8080/home/`, modify and point to another location if needed.
 - The right panel displays JSON payloads when receiving messages of type `SelectionChange`.
 - Use the **Actions** menu to send various JSON commands back to the webview.
 
