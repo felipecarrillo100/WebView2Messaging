@@ -1,0 +1,50 @@
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug*/
+[Rr]elease*/
+x64/
+build/
+[Bb]in/
+[Oo]bj/
+
+# NuGet packages
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# WebView2 cache
+WebView2Cache/
+
+# Generated files
+*.log
+*.tlog
+*.lastbuildstate
+
+# Others
+*.pch
+*.pdb
+*.ipdb
+*.iobj
+
+# C++ IntelliSense files
+*.VC.db
+*.VC.VC.opendb
+
+# Visual Studio Code (if used)
+.vscode/
+
+# Mac OS
+.DS_Store
+
+# Windows thumbnail cache files
+Thumbs.db
