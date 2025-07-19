@@ -94,44 +94,67 @@ NOTE:  Other Message Types could be discussed and added in the future
 {
   "items": [
     {
-      "filename": "C:\\APOLLODATA\\ALABAMA\\CONGRESSIONAL_DISTRICTS.shp",
+      "filename": "PATH\\TO\\FILE", // Path to file
       "catalogItem": {
-        "abstractDescription": "Feature",
-        "attachments": ["thumbnail", "metadata", "default_vector_style"],
-        "custom": [
-          {"name": "Path", "value": "C:\\APOLLODATA\\ALABAMA\\CONGRESSIONAL_DISTRICTS.shp"}
-        ],
-        "dataOwner": "admin",
-        "dataType": "VECTOR",
-        "downloadEnabled": true,
-        "downloadUrl": "../api/user/2/downloads/14b522ed6efc23ae016effa013d40014",
-        "epsgCode": "EPSG:4326",
-        "geometry": [-88.5254, 30.1777, -84.8259, 35.0052],
-        "id": "14b522ed6efc23ae016effa013d40014",
-        "isoMetadata": "../api/user/catalogs/2/isometadata/14b522ed6efc23ae016effa013d40014",
-        "keywords": "CONGRESSIONAL_DISTRICTS",
-        "name": "CONGRESSIONAL_DISTRICTS",
-        "nativeEpsgCode": "EPSG:26916",
-        "parentId": "14b522ed6efc23ae016eff9fbb830000",
-        "registrationDate": "2019-12-13T14:18:30Z",
-        "service3dEnabled": false,
-        "sourceConnectionId": 2,
-        "sourceConnectionName": "http://trident-dev.luciad.com/erdas-apollo",
-        "sourceConnectionType": "apollo",
-        "thumbnail": "../api/user/catalogs/2/thumbnail/14b522ed6efc23ae016effa013d40014",
-        "title": "CONGRESSIONAL_DISTRICTS.shp",
-        "viewEnabled": true,
-        "wmsEnabled": true,
-        "wmsLayerName": "CONGRESSIONAL_DISTRICTS",
-        "wmsRequiresPassword": true,
-        "wmsUrl": "http://trident-dev.luciad.com/ApolloCatalogWMS/service.svc/get",
-        "xResolution": 33.7616,
-        "yResolution": 53.4415
+        ...  //  Detailed Catalog item content
       }
     }
     // ... possibly more items
   ]
 }
+```
+
+#### Data Sample for `SelectionChange` event 
+```json
+{
+  "header": {
+    "source": "CATEX_BRIDGE",
+    "type": "SelectionChange",
+    "timestamp": 1689812345678,
+    "id": "msg-1234"
+  },
+  "body": {
+    "items": [
+      {
+        "filename": "C:\\APOLLODATA\\ALABAMA\\CONGRESSIONAL_DISTRICTS.shp",
+        "catalogItem": {
+          "abstractDescription": "Feature",
+          "attachments": ["thumbnail", "metadata", "default_vector_style"],
+          "custom": [
+            {"name": "Path", "value": "C:\\APOLLODATA\\ALABAMA\\CONGRESSIONAL_DISTRICTS.shp"}
+          ],
+          "dataOwner": "admin",
+          "dataType": "VECTOR",
+          "downloadEnabled": true,
+          "downloadUrl": "../api/user/2/downloads/14b522ed6efc23ae016effa013d40014",
+          "epsgCode": "EPSG:4326",
+          "geometry": [-88.5254, 30.1777, -84.8259, 35.0052],
+          "id": "14b522ed6efc23ae016effa013d40014",
+          "isoMetadata": "../api/user/catalogs/2/isometadata/14b522ed6efc23ae016effa013d40014",
+          "keywords": "CONGRESSIONAL_DISTRICTS",
+          "name": "CONGRESSIONAL_DISTRICTS",
+          "nativeEpsgCode": "EPSG:26916",
+          "parentId": "14b522ed6efc23ae016eff9fbb830000",
+          "registrationDate": "2019-12-13T14:18:30Z",
+          "service3dEnabled": false,
+          "sourceConnectionId": 2,
+          "sourceConnectionName": "http://trident-dev.luciad.com/erdas-apollo",
+          "sourceConnectionType": "apollo",
+          "thumbnail": "../api/user/catalogs/2/thumbnail/14b522ed6efc23ae016effa013d40014",
+          "title": "CONGRESSIONAL_DISTRICTS.shp",
+          "viewEnabled": true,
+          "wmsEnabled": true,
+          "wmsLayerName": "CONGRESSIONAL_DISTRICTS",
+          "wmsRequiresPassword": true,
+          "wmsUrl": "http://trident-dev.luciad.com/ApolloCatalogWMS/service.svc/get",
+          "xResolution": 33.7616,
+          "yResolution": 53.4415
+        }
+      }
+    ]
+  }
+}
+
 ```
 
 ### Commands Sent From Native App (C++) to WebView
