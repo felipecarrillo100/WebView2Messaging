@@ -100,7 +100,7 @@ void InitializeWebView2(HWND hwnd)
 
                                             if (parsed.is_object() && parsed.contains("header") && parsed.contains("body")) {
                                                 const auto& header = parsed["header"];
-                                                if (header["type"] == "SelectionChange") {
+                                                if (header["source"]=="CATEX_BRIDGE" && header["type"] == "SelectionChange") {
                                                     std::string bodyJson = parsed["body"].dump(2);
                                                     std::wstring displayText = Utf8ToWide(bodyJson);
                                                     SetWindowTextW(g_textBox, displayText.c_str());

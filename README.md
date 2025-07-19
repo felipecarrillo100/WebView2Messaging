@@ -50,8 +50,158 @@ WebView2Messaging/            # Root folder
 - The right panel displays JSON payloads when receiving messages of type `SelectionChange`.
 - Use the **Actions** menu to send various JSON commands back to the webview.
 
+---
+
+## WinApp/ WebView JSON Message Interface
+
+
+### General Message Envelope
+
+All messages exchanged between WebView and native app conform to this envelope structure:
+
+```json
+{
+  "header": {
+    "source": "string",          // "CATEX_BRIDGE" or "WinApp" depending on the direction
+    "version": "string (optional)",  // Version of the interface (Optional)
+    "type": "string",            // Message type identifier
+    "timestamp": 1234567890,     // Unix timestamp in ms (optional)
+    "id": "string or number (optional)"
+  },
+  "body": {
+    // message-specific payload
+  }
+}
+```
+### Messages Types Sent From WebView to Native App
+
+* `SelectionChange` Sent when user selects one or more catalog items in the WebView.
+
+NOTE:  Other Message Types could be discussed and added in the future
+
+#### Header example:
+```json
+{
+  "source": "CATEX_BRIDGE",
+  "type": "SelectionChange",
+  "timestamp": 1689812345678,
+  "id": "msg-1234"
+}
+```
+#### Body structure:
+
+```json
+{
+  "items": [
+    {
+      "filename": "C:\\APOLLODATA\\ALABAMA\\CONGRESSIONAL_DISTRICTS.shp",
+      "catalogItem": {
+        "abstractDescription": "Feature",
+        "attachments": ["thumbnail", "metadata", "default_vector_style"],
+        "custom": [
+          {"name": "Path", "value": "C:\\APOLLODATA\\ALABAMA\\CONGRESSIONAL_DISTRICTS.shp"}
+        ],
+        "dataOwner": "admin",
+        "dataType": "VECTOR",
+        "downloadEnabled": true,
+        "downloadUrl": "../api/user/2/downloads/14b522ed6efc23ae016effa013d40014",
+        "epsgCode": "EPSG:4326",
+        "geometry": [-88.5254, 30.1777, -84.8259, 35.0052],
+        "id": "14b522ed6efc23ae016effa013d40014",
+        "isoMetadata": "../api/user/catalogs/2/isometadata/14b522ed6efc23ae016effa013d40014",
+        "keywords": "CONGRESSIONAL_DISTRICTS",
+        "name": "CONGRESSIONAL_DISTRICTS",
+        "nativeEpsgCode": "EPSG:26916",
+        "parentId": "14b522ed6efc23ae016eff9fbb830000",
+        "registrationDate": "2019-12-13T14:18:30Z",
+        "service3dEnabled": false,
+        "sourceConnectionId": 2,
+        "sourceConnectionName": "http://trident-dev.luciad.com/erdas-apollo",
+        "sourceConnectionType": "apollo",
+        "thumbnail": "../api/user/catalogs/2/thumbnail/14b522ed6efc23ae016effa013d40014",
+        "title": "CONGRESSIONAL_DISTRICTS.shp",
+        "viewEnabled": true,
+        "wmsEnabled": true,
+        "wmsLayerName": "CONGRESSIONAL_DISTRICTS",
+        "wmsRequiresPassword": true,
+        "wmsUrl": "http://trident-dev.luciad.com/ApolloCatalogWMS/service.svc/get",
+        "xResolution": 33.7616,
+        "yResolution": 53.4415
+      }
+    }
+    // ... possibly more items
+  ]
+}
+```
+
+### Commands Sent From Native App (C++) to WebView
+The native app can send command messages to the WebView to trigger UI actions or workflows. These commands use "type": "Command" in the header and specify an "action" code in the body.
+#### NOTE:  Many more command ara available in Catalog Explorer, this is just a minimalistic example.
+
+## Commonly Used Commands
+
+| Action Code | Description              | Parameters                         |
+|-------------|--------------------------|----------------------------------|
+| 304         | Browse Catalogs          | None                             |
+| 212         | Show Table Window        | None                             |
+| 301         | Open Advanced Search     | None                             |
+| 2000        | Search in Current Map    | `fitToBounds` (bool), `fitBounds` (nullable), `locationName` (string) |
+
+
+### Example Command Message
+```json
+{
+  "header": {
+    "source": "WinApp",
+    "type": "Command",
+    "timestamp": 1689815678901
+  },
+  "body": {
+    "action": 304
+  }
+}
+```
+### Command With Parameters Example
+For commands that require parameters, the body includes a parameters object:
+
+```json
+{
+  "header": {
+    "source": "WinApp",
+    "type": "Command",
+    "timestamp": 1689815678901
+  },
+  "body": {
+    "action": 2000,
+    "parameters": {
+      "fitToBounds": true,
+      "fitBounds": null,
+      "locationName": "current map bounds"
+    }
+  }
+}
+```
+
+# Summary of Message Types
+
+Currently the next Message types are available: document describes the main JSON message types exchanged between the WinApp application and the WebView2 component.
+
+| Message Type      | Direction        | Description                                                |
+|-------------------|------------------|------------------------------------------------------------|
+| **SelectionChange**| WebView → WinApp | Sent by WebView when the user changes selection. Contains detailed data about the selected catalog items. |
+| **Command**       | WinApp → WebView | Commands sent from the Win32 app to the WebView to trigger UI actions, such as opening dialogs or performing searches. |
+
+# Notes
+* All messages include timestamps to support message ordering and latency tracking but are optional.
+* The optional id field can be used to correlate requests and responses if needed.
+* The catalogItem object contains rich metadata about the item, which the native app can use to display, download, or interact with resources.
+* Both sides should validate message structure and handle errors gracefully to maintain UI consistency and robustness.
+* Commands from WinApp to WebView show in this document are a minimalistic sample, many more commands are available.
 ## License
 
 This project is licensed under the MIT License.
 
 ---
+
+
+
