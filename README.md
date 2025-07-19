@@ -221,6 +221,55 @@ Currently the next Message types are available: document describes the main JSON
 * Both sides should validate message structure and handle errors gracefully to maintain UI consistency and robustness.
 * The commands from WinApp to WebView shown in this document are a minimalistic subset. Many more commands are available.
 
+
+## C++ Integration with WebView2 Messaging
+### Sending Messages from C++ to the WebView
+
+In C++, use the `webview->PostWebMessageAsJson()` method to send a JSON message:
+
+```cpp
+std::string jsonMessage = R"({
+  "header": {
+    "source": "native",
+    "type": "Command",
+    "timestamp": 1721415622331
+  },
+  "body": {
+    "command": "highlightFeature",
+    "featureId": "ABC123"
+  }
+})";
+
+webview->PostWebMessageAsJson(winrt::to_hstring(jsonMessage));
+```
+
+This will emit the message inside the WebView context, where JavaScript can capture it using:
+
+```javascript
+window.chrome.webview.addEventListener("message", (event) => {
+  const message = event.data;
+  // Process message
+});
+```
+
+### Receiving Messages in C++
+To receive messages from the WebView, register a handler:
+
+```cpp
+webview->WebMessageReceived(
+  winrt::auto_revoke,
+  [](auto const& sender, auto const& args) {
+    std::wstring message = args.WebMessageAsJson().c_str();
+
+    // You can now parse the message using your preferred JSON library
+    // Example: nlohmann::json or RapidJSON
+  });
+
+```
+* The incoming message will be a UTF-8 encoded JSON string.
+* Always validate and parse the incoming JSON before acting on it.
+* You can use nlohmann::json::parse() or similar libraries to extract fields like type, body, etc.
+
 ## License
 
 This project is licensed under the MIT License.
