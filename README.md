@@ -235,8 +235,7 @@ std::string jsonMessage = R"({
     "timestamp": 1721415622331
   },
   "body": {
-    "command": "highlightFeature",
-    "featureId": "ABC123"
+    "action": 304
   }
 })";
 
