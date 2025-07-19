@@ -219,7 +219,8 @@ Currently the next Message types are available: document describes the main JSON
 * The optional id field can be used to correlate requests and responses if needed.
 * The catalogItem object contains rich metadata about the item, which the native app can use to display, download, or interact with resources.
 * Both sides should validate message structure and handle errors gracefully to maintain UI consistency and robustness.
-* Commands from WinApp to WebView show in this document are a minimalistic sample, many more commands are available.
+* The commands from WinApp to WebView shown in this document are a minimalistic subset. Many more commands are available.
+
 ## License
 
 This project is licensed under the MIT License.
